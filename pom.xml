@@ -6,6 +6,8 @@
     <groupId>com.bettercode</groupId>
     <artifactId>bettercode-connect</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
     <name>bettercode-connect</name>
     <description>BetterCode Connect</description>
 
@@ -15,6 +17,11 @@
         <version>2.1.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+    <modules>
+        <module>connect-excel</module>
+        <module>connect-web</module>
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>

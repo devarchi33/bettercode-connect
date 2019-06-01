@@ -21,6 +21,7 @@
     <modules>
         <module>connect-excel</module>
         <module>connect-web</module>
+        <module>test-helper</module>
     </modules>
 
     <properties>

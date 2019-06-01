@@ -47,6 +47,12 @@
             <artifactId>connect-excel</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.bettercode</groupId>
+            <artifactId>test-helper</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -22,7 +22,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -31,13 +30,10 @@ import java.util.List;
 public class ExcelTemplate {
     private final static Logger logger = LoggerFactory.getLogger(ExcelTemplate.class);
 
-    public List<Object> getRows(ExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) {
+    public List<Object> getRows(ExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) throws IOException {
         List<Object> objectList = new ArrayList<>();
-        File tempFile = null;
         try {
-            tempFile = uploadExcelFile.getOriginalFile();
-
-            try (OPCPackage opcPackage = OPCPackage.open(tempFile.getPath(), PackageAccess.READ)) {
+            try (OPCPackage opcPackage = OPCPackage.open(uploadExcelFile.getOriginalFile().getPath(), PackageAccess.READ)) {
                 ReadOnlySharedStringsTable strings = new ReadOnlySharedStringsTable(opcPackage);
                 XSSFReader xssfReader = new XSSFReader(opcPackage);
                 StylesTable styles = xssfReader.getStylesTable();
@@ -114,8 +110,8 @@ public class ExcelTemplate {
             logger.error("excel file parsing error", e);
             throw new RuntimeException(e);
         } finally {
-            if(tempFile != null) {
-                tempFile.deleteOnExit();
+            if(uploadExcelFile.getOriginalFile() != null) {
+                uploadExcelFile.getOriginalFile().deleteOnExit();
             }
         }
 

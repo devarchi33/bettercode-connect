@@ -7,6 +7,7 @@ import com.bettercode.connect.engine.mapper.Product;
 import com.bettercode.connect.entity.ExcelFile;
 import com.bettercode.connect.entity.ExcelTypeId;
 import com.bettercode.connect.exception.NotRegisteredException;
+import com.bettercode.connect.exception.NotSupportedFileException;
 import com.bettercode.connect.repository.IExcelFileRepository;
 import com.bettercode.connect.repository.IExcelTypeRepository;
 import com.bettercode.connect.service.IUploadService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -62,16 +64,18 @@ public class UploadServiceImpl implements IUploadService {
 
   @Override
   public String findJsonFormatExcelFile(Long id) {
-    //todo add parsing logic
     Optional<ExcelFile> optional = excelFileRepository.findById(id);
     if(optional.isPresent()) {
-      return parsingExcelFileToJson(optional.get());
+      try {
+        return parsingExcelFileToJson(optional.get());
+      } catch (IOException e) {
+        throw new NotSupportedFileException("This Excel file format can't parsing..");
+      }
     }
     throw new NoResultException("ID: " + id + ", ExcelFile is not exists.");
   }
 
-  @Override
-  public String parsingExcelFileToJson(ExcelFile uploadExcelFile) {
+  private String parsingExcelFileToJson(ExcelFile uploadExcelFile) throws IOException {
     ExcelTemplate excelTemplate = new ExcelTemplate();
     return excelTemplate.getRows(uploadExcelFile, getExcelItemProcessor(uploadExcelFile)).toString();
   }

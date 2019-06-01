@@ -4,13 +4,13 @@
 # * 'gtrp' and 'gtr' create a GET request with or without query parameters;
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-PUT {{apiAddress}}/excel-processor?tenantCode=bettercode&appCode=test&excelType=test&userId=li.dongxun
+PUT {{apiAddress}}/excel-processor?tenantCode=bettercode&appCode=connect&excelType=stock&userId=li.dongxun
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="excelFile"; filename="sample.xlsx"
+Content-Disposition: form-data; name="excelFile"; filename="barrel_omni_stock_li.dongxun_temp.xlsx"
 
-< ./sample.xlsx
+< ./barrel_omni_stock_li.dongxun_temp.xlsx
 ###
 
 GET {{apiAddress}}/excel-processor/1

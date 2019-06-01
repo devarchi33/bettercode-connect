@@ -1,6 +1,8 @@
 package com.bettercode.connect.entity;
 
+import com.bettercode.connect.utils.MultipartFileUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.File;
@@ -28,7 +30,7 @@ public class ExcelFile {
 
   @Lob
   @Column(name="excel_file")
-  private File excelFile;
+  private byte[] excelFile;
 
   @Embedded
   private Committed committed;
@@ -36,16 +38,20 @@ public class ExcelFile {
   public ExcelFile() {
   }
 
-  public ExcelFile(String tenantCode, String appCode, String excelType, File excelFile, String createdBy) throws IOException {
+  public ExcelFile(String tenantCode, String appCode, String excelType, MultipartFile excelFile, String createdBy) throws IOException {
     this.tenantCode = tenantCode;
     this.appCode = appCode;
     this.excelType = excelType;
-    this.excelFile = excelFile;
+    this.excelFile = excelFile.getBytes();
     this.committed = new Committed(new Date(), createdBy);
   }
 
   public String getLinkUrl(Environment environment) {
     return environment.getProperty("link.url") + "/"  + this.getId();
+  }
+
+  public File getOriginalFile() throws IOException {
+    return MultipartFileUtils.writeBytesToFile(excelFile, "./" + tenantCode + "_" + appCode + "_" + excelType + "_temp.xlsx");
   }
 
   public Long getId() {
@@ -64,7 +70,7 @@ public class ExcelFile {
     return excelType;
   }
 
-  public File getExcelFile() {
+  public byte[] getExcelFile() {
     return excelFile;
   }
 

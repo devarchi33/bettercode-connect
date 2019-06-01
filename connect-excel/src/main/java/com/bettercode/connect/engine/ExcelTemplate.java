@@ -1,6 +1,6 @@
 package com.bettercode.connect.engine;
 
-
+import com.bettercode.connect.entity.ExcelFile;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
@@ -31,10 +31,13 @@ import java.util.List;
 public class ExcelTemplate {
     private final static Logger logger = LoggerFactory.getLogger(ExcelTemplate.class);
 
-    public List<Object> getRows(File uploadExcelFile, ExcelRowMapper excelRowMapper) {
+    public List<Object> getRows(ExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) {
         List<Object> objectList = new ArrayList<>();
+        File tempFile = null;
         try {
-            try (OPCPackage opcPackage = OPCPackage.open(uploadExcelFile.getPath(), PackageAccess.READ)) {
+            tempFile = uploadExcelFile.getOriginalFile();
+
+            try (OPCPackage opcPackage = OPCPackage.open(tempFile.getPath(), PackageAccess.READ)) {
                 ReadOnlySharedStringsTable strings = new ReadOnlySharedStringsTable(opcPackage);
                 XSSFReader xssfReader = new XSSFReader(opcPackage);
                 StylesTable styles = xssfReader.getStylesTable();
@@ -111,8 +114,8 @@ public class ExcelTemplate {
             logger.error("excel file parsing error", e);
             throw new RuntimeException(e);
         } finally {
-            if(uploadExcelFile != null) {
-                uploadExcelFile.deleteOnExit();
+            if(tempFile != null) {
+                tempFile.deleteOnExit();
             }
         }
 

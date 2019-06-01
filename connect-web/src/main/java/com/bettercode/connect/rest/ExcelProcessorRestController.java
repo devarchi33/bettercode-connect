@@ -19,42 +19,42 @@ import java.io.IOException;
 @RequestMapping("/api/v1/excel-processor")
 public class ExcelProcessorRestController {
 
-    private Environment env;
+  private Environment env;
 
-    @Autowired
-    public void setEnv(Environment env) {
-        this.env = env;
+  @Autowired
+  public void setEnv(Environment env) {
+    this.env = env;
+  }
+
+  private IUploadService uploadService;
+
+  @Autowired
+  public void setUploadService(IUploadService uploadService) {
+    this.uploadService = uploadService;
+  }
+
+  @PutMapping
+  public ResponseEntity<String> upload(@RequestParam("tenantCode") String tenantCode,
+                                       @RequestParam("appCode") String appCode,
+                                       @RequestParam("excelType") String excelType,
+                                       @RequestParam("userId") String userId,
+                                       @RequestParam("excelFile") MultipartFile excelFile) throws IOException {
+
+    if(!FileUtil.isExcelFile(excelFile)) {
+      throw new NotSupportedFileException(excelFile.getOriginalFilename() + " is not excel file!");
     }
 
-    private IUploadService uploadService;
-
-    @Autowired
-    public void setUploadService(IUploadService uploadService) {
-        this.uploadService = uploadService;
+    if(!uploadService.isRegisteredExcelType(tenantCode, appCode, excelType)) {
+      throw new NotRegisteredException(tenantCode + ", " + appCode + ", " + excelType + " is not registered!");
     }
 
-    @PutMapping
-    public ResponseEntity<String> upload(@RequestParam("tenantCode") String tenantCode,
-                                         @RequestParam("appCode") String appCode,
-                                         @RequestParam("excelType") String excelType,
-                                         @RequestParam("userId") String userId,
-                                         @RequestParam("excelFile") MultipartFile excelFile) throws IOException {
+    ExcelFile createdExcelFile = uploadService.saveUploadExcelFile(new ExcelFile(tenantCode, appCode, excelType, excelFile, userId));
+    return new ResponseEntity<>(createdExcelFile.getLinkUrl(env), HttpStatus.CREATED);
+  }
 
-        if(!FileUtil.isExcelFile(excelFile)) {
-            throw new NotSupportedFileException(excelFile.getOriginalFilename() + " is not excel file!");
-        }
-
-        if(!uploadService.isRegisteredExcelType(tenantCode, appCode, excelType)) {
-            throw new NotRegisteredException(tenantCode + ", " + appCode + ", " + excelType + " is not registered!");
-        }
-
-        ExcelFile createdExcelFile = uploadService.saveUploadExcelFile(new ExcelFile(tenantCode, appCode, excelType, FileUtil.multipartFileToFileConverter(excelFile), userId));
-        return new ResponseEntity<>(createdExcelFile.getLinkUrl(env), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<String> search(@PathVariable("id") Long id) throws IOException {
-        return new ResponseEntity<>(uploadService.findJsonFormatExcelFile(id), HttpStatus.OK);
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<String> search(@PathVariable("id") Long id) throws IOException {
+    return new ResponseEntity<>(uploadService.findJsonFormatExcelFile(id), HttpStatus.OK);
+  }
 
 }

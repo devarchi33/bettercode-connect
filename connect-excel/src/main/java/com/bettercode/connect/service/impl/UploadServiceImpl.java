@@ -3,10 +3,11 @@ package com.bettercode.connect.service.impl;
 import com.bettercode.connect.engine.ExcelRowMapper;
 import com.bettercode.connect.engine.ExcelTemplate;
 import com.bettercode.connect.engine.mapper.BarrelOmniStock;
+import com.bettercode.connect.engine.mapper.Product;
 import com.bettercode.connect.entity.ExcelFile;
 import com.bettercode.connect.entity.ExcelTypeId;
-import com.bettercode.connect.engine.mapper.Product;
 import com.bettercode.connect.exception.NotRegisteredException;
+import com.bettercode.connect.repository.IExcelFileRepository;
 import com.bettercode.connect.repository.IExcelTypeRepository;
 import com.bettercode.connect.service.IUploadService;
 import org.slf4j.Logger;
@@ -23,6 +24,13 @@ public class UploadServiceImpl implements IUploadService {
     @Autowired
     public void setExcelTypeRepository(IExcelTypeRepository excelTypeRepository) {
         this.excelTypeRepository = excelTypeRepository;
+    }
+
+    private IExcelFileRepository excelFileRepository;
+
+    @Autowired
+    public void setExcelFileRepository(IExcelFileRepository excelFileRepository) {
+        this.excelFileRepository = excelFileRepository;
     }
 
     private ExcelRowMapper<Product> productExcelRowMapper;
@@ -42,6 +50,11 @@ public class UploadServiceImpl implements IUploadService {
     @Override
     public boolean isRegisteredExcelType(String tenantCode, String appCode, String excelType) {
         return excelTypeRepository.existsById(new ExcelTypeId(tenantCode, appCode, excelType));
+    }
+
+    @Override
+    public ExcelFile saveUploadExcelFile(ExcelFile excelFile) {
+        return excelFileRepository.save(excelFile);
     }
 
     @Override

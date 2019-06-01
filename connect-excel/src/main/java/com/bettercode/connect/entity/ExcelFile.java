@@ -1,5 +1,7 @@
 package com.bettercode.connect.entity;
 
+import org.springframework.core.env.Environment;
+
 import javax.persistence.*;
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +42,10 @@ public class ExcelFile {
     this.excelType = excelType;
     this.excelFile = excelFile;
     this.committed = new Committed(new Date(), createdBy);
+  }
+
+  public String getLinkUrl(Environment environment) {
+    return environment.getProperty("link.url") + "/"  + this.getId();
   }
 
   public Long getId() {

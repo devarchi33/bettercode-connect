@@ -53,8 +53,8 @@ public class ExcelProcessorRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> search(@PathVariable("id") String id) throws IOException {
-        return new ResponseEntity<>("World", HttpStatus.OK);
+    public ResponseEntity<String> search(@PathVariable("id") Long id) throws IOException {
+        return new ResponseEntity<>(uploadService.findJsonFormatExcelFile(id), HttpStatus.OK);
     }
 
 }

@@ -12,3 +12,8 @@ Content-Disposition: form-data; name="excelFile"; filename="sample.xlsx"
 
 < ./sample.xlsx
 ###
+
+GET {{apiAddress}}/excel-processor/1
+Accept: application/json
+
+###

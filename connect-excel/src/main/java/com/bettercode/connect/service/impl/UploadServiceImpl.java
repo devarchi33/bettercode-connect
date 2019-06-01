@@ -58,6 +58,12 @@ public class UploadServiceImpl implements IUploadService {
     }
 
     @Override
+    public String findJsonFormatExcelFile(Long id) {
+        //todo add parsing logic
+        return excelFileRepository.findById(id).toString();
+    }
+
+    @Override
     public String parsingExcelFileToJson(ExcelFile uploadExcelFile) {
         ExcelTemplate excelTemplate = new ExcelTemplate();
         return excelTemplate.getRows(uploadExcelFile.getExcelFile(), getExcelItemProcessor(uploadExcelFile)).toString();

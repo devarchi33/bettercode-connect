@@ -1,6 +1,7 @@
 package com.bettercode.connect.excel.entity;
 
 import javax.persistence.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -25,7 +26,7 @@ public class ExcelFile {
 
   @Lob
   @Column(name="excel_file")
-  private byte[] excelFile;
+  private File excelFile;
 
   @Embedded
   private Committed committed;
@@ -33,7 +34,7 @@ public class ExcelFile {
   public ExcelFile() {
   }
 
-  public ExcelFile(String tenantCode, String appCode, String excelType, byte[] excelFile, String createdBy) throws IOException {
+  public ExcelFile(String tenantCode, String appCode, String excelType, File excelFile, String createdBy) throws IOException {
     this.tenantCode = tenantCode;
     this.appCode = appCode;
     this.excelType = excelType;
@@ -57,7 +58,7 @@ public class ExcelFile {
     return excelType;
   }
 
-  public byte[] getExcelFile() {
+  public File getExcelFile() {
     return excelFile;
   }
 

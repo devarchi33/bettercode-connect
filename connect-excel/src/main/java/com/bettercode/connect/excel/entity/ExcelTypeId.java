@@ -9,6 +9,15 @@ public class ExcelTypeId implements Serializable {
   private String appCode;
   private String excelType;
 
+  public ExcelTypeId() {
+  }
+
+  public ExcelTypeId(String tenantCode, String appCode, String excelType) {
+    this.tenantCode = tenantCode;
+    this.appCode = appCode;
+    this.excelType = excelType;
+  }
+
   public String getTenantCode() {
     return tenantCode;
   }

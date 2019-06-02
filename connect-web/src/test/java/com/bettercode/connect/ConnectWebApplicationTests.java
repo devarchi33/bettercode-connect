@@ -36,8 +36,11 @@ public class ConnectWebApplicationTests {
     if (Objects.equals(env.getProperty("spring.profiles"), "development")) {
       TransactionJpaTemplate jpaTemplate = new TransactionJpaTemplate(emf);
       jpaTemplate.execute(em -> {
-        ExcelType excelType = new ExcelType("bettercode", "connect", "stock", "li.dongxun");
-        em.merge(excelType);
+        ExcelType excelType1 = new ExcelType("bettercode", "connect", "stock", "li.dongxun");
+        em.merge(excelType1);
+
+        ExcelType excelType2 = new ExcelType("bettercode", "connect", "account", "li.dongxun");
+        em.merge(excelType2);
         return null;
       });
     }

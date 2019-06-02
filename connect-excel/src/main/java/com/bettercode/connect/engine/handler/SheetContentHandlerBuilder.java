@@ -29,14 +29,25 @@ public class SheetContentHandlerBuilder {
 
       @Override
       public void startRow(int rowNum) {
-        if(rowNum == 0) {
-          firstRow = true;
+        if(!excelRowMapper.toString().contains("BettercodeConnectAccount")) {
+          if (rowNum == 0) {
+            firstRow = true;
+          } else {
+            firstRow = false;
+            object = excelRowMapper.create();
+          }
+          currentRowIndex = rowNum;
+          currentColumnIndex = -1;
         } else {
-          firstRow = false;
-          object = excelRowMapper.create();
+          if (rowNum < 7) {
+            firstRow = true;
+          } else {
+            firstRow = false;
+            object = excelRowMapper.create();
+          }
+          currentRowIndex = rowNum;
+          currentColumnIndex = -1;
         }
-        currentRowIndex = rowNum;
-        currentColumnIndex = -1;
       }
 
       @Override

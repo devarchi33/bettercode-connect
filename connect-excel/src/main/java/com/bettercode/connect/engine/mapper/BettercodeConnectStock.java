@@ -1,16 +1,16 @@
 package com.bettercode.connect.engine.mapper;
 
-public class BarrelOmniStock {
+public class BettercodeConnectStock {
 
     private String skuCode;
     private String styleCode;
     private String styleName;
     private Integer qty;
 
-    public BarrelOmniStock() {
+    public BettercodeConnectStock() {
     }
 
-    public BarrelOmniStock(String skuCode, String styleCode, String styleName, Integer qty) {
+    public BettercodeConnectStock(String skuCode, String styleCode, String styleName, Integer qty) {
         this.skuCode = skuCode;
         this.styleCode = styleCode;
         this.styleName = styleName;

@@ -28,6 +28,9 @@ public class ExcelFile {
   @Column(name = "excel_type")
   private String excelType;
 
+  @Column(name = "row_mapper_name")
+  private String rowMapperName;
+
   @Lob
   @Column(name="excel_file")
   private byte[] excelFile;
@@ -42,6 +45,7 @@ public class ExcelFile {
     this.tenantCode = tenantCode;
     this.appCode = appCode;
     this.excelType = excelType;
+    this.rowMapperName = createRowMapperName();
     this.excelFile = excelFile.getBytes();
     this.committed = new Committed(new Date(), createdBy);
   }
@@ -68,6 +72,17 @@ public class ExcelFile {
 
   public String getExcelType() {
     return excelType;
+  }
+
+  public String getRowMapperName() {
+    return rowMapperName;
+  }
+
+  private String  createRowMapperName() {
+    return this.rowMapperName = tenantCode.substring(0, 1).toLowerCase() + tenantCode.substring(1)
+        + appCode.substring(0, 1).toUpperCase() + appCode.substring(1)
+        + excelType.substring(0, 1).toUpperCase() + excelType.substring(1)
+        + "ExcelItemProcessor";
   }
 
   public byte[] getExcelFile() {

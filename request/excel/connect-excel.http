@@ -8,9 +8,9 @@ PUT {{apiAddress}}/excel-processor?tenantCode=bettercode&appCode=connect&excelTy
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="excelFile"; filename="barrel_omni_stock_li.dongxun_temp.xlsx"
+Content-Disposition: form-data; name="excelFile"; filename="bettercode_connect_stock_li.dongxun_temp.xlsx"
 
-< ./barrel_omni_stock_li.dongxun_temp.xlsx
+< ./bettercode_connect_stock_li.dongxun_temp.xlsx
 ###
 
 GET {{apiAddress}}/excel-processor/1

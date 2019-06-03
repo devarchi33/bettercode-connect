@@ -1,7 +1,7 @@
 package com.bettercode.connect.service.impl;
 
 import com.bettercode.connect.engine.ExcelRowMapper;
-import com.bettercode.connect.engine.ExcelTemplate;
+import com.bettercode.connect.engine.template.AccountExcelTemplate;
 import com.bettercode.connect.entity.ExcelFile;
 import com.bettercode.connect.entity.ExcelTypeId;
 import com.bettercode.connect.exception.NotRegisteredException;
@@ -65,7 +65,7 @@ public class UploadServiceImpl implements IUploadService {
   }
 
   private String parsingExcelFileToJson(ExcelFile uploadExcelFile) {
-    ExcelTemplate excelTemplate = new ExcelTemplate();
+    AccountExcelTemplate excelTemplate = new AccountExcelTemplate();
     try {
       return excelTemplate.getRows(uploadExcelFile, getExcelItemProcessor(uploadExcelFile)).toString();
     } catch (IOException e) {

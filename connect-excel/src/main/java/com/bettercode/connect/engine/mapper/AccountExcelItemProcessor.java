@@ -5,14 +5,14 @@ import com.bettercode.connect.engine.ExcelRowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BettercodeConnectAccountExcelItemProcessor extends AbstractExcelItemProcessor implements ExcelRowMapper<BettercodeConnectAccount> {
+public class AccountExcelItemProcessor extends AbstractExcelItemProcessor implements ExcelRowMapper<Account> {
     @Override
-    public BettercodeConnectAccount create() {
-        return new BettercodeConnectAccount();
+    public Account create() {
+        return new Account();
     }
 
     @Override
-    public void mapRow(BettercodeConnectAccount bettercodeConnectAccount, int rowIndex, int columnIndex, String cellValue) {
+    public void mapRow(Account bettercodeConnectAccount, int rowIndex, int columnIndex, String cellValue) {
         switch (columnIndex) {
             case 0 :
                 bettercodeConnectAccount.setId(getStringValueFromCell(cellValue, rowIndex, columnIndex));

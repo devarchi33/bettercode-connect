@@ -1,6 +1,8 @@
-package com.bettercode.connect.engine;
+package com.bettercode.connect.engine.template;
 
-import com.bettercode.connect.engine.handler.SheetContentHandlerBuilder;
+import com.bettercode.connect.engine.ExcelRowMapper;
+import com.bettercode.connect.engine.handler.AccountSheetContentHandlerBuilder;
+import com.bettercode.connect.engine.mapper.AccountRecord;
 import com.bettercode.connect.entity.ExcelFile;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
@@ -23,14 +25,12 @@ import org.xml.sax.XMLReader;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ExcelTemplate {
-    private final static Logger logger = LoggerFactory.getLogger(ExcelTemplate.class);
+public class AccountExcelTemplate {
+    private final static Logger logger = LoggerFactory.getLogger(AccountExcelTemplate.class);
 
-    public List<Object> getRows(ExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) throws IOException {
-        SheetContentHandlerBuilder sheetContentHandlerBuilder = new SheetContentHandlerBuilder(new ArrayList<>());
+    public AccountRecord getRows(ExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) throws IOException {
+        AccountSheetContentHandlerBuilder sheetContentHandlerBuilder = new AccountSheetContentHandlerBuilder(new AccountRecord());
 
         try {
             try (OPCPackage opcPackage = OPCPackage.open(uploadExcelFile.getOriginalFile().getPath(), PackageAccess.READ)) {
@@ -71,6 +71,6 @@ public class ExcelTemplate {
             }
         }
 
-        return sheetContentHandlerBuilder.getExcelDataList();
+        return sheetContentHandlerBuilder.getBettercodeConnectAccount();
     }
 }

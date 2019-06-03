@@ -1,14 +1,10 @@
 package com.bettercode.connect;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.SpringApplication;
 
-@RunWith(SpringRunner.class)
 public class ConnectExcelApplicationTests {
-
-  @Test
-  public void contextLoads() {
+  public static void main(String[] args) {
+    SpringApplication.run(ConnectExcelApplicationTests.class, args);
   }
 
 }

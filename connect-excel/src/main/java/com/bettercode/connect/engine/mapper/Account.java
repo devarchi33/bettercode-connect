@@ -1,6 +1,6 @@
 package com.bettercode.connect.engine.mapper;
 
-public class BettercodeConnectAccount {
+public class Account {
 
   private String id;
   private String transactionTime;
@@ -13,12 +13,12 @@ public class BettercodeConnectAccount {
   private String processingPoint;
   private String sortation;
 
-  public BettercodeConnectAccount() {
+  public Account() {
   }
 
-  public BettercodeConnectAccount(String id, String transactionTime, String reason, String recipient,
-                                  String forwardingAmount, String receivedAmount, String balance,
-                                  String memo, String processingPoint, String sortation) {
+  public Account(String id, String transactionTime, String reason, String recipient,
+                 String forwardingAmount, String receivedAmount, String balance,
+                 String memo, String processingPoint, String sortation) {
     this.id = id;
     this.transactionTime = transactionTime;
     this.reason = reason;

@@ -79,9 +79,7 @@ public class ExcelFile {
   }
 
   private String  createRowMapperName() {
-    return this.rowMapperName = tenantCode.substring(0, 1).toLowerCase() + tenantCode.substring(1)
-        + appCode.substring(0, 1).toUpperCase() + appCode.substring(1)
-        + excelType.substring(0, 1).toUpperCase() + excelType.substring(1)
+    return excelType.substring(0, 1).toLowerCase() + excelType.substring(1)
         + "ExcelItemProcessor";
   }
 

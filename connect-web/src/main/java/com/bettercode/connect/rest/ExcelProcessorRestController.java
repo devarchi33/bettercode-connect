@@ -33,7 +33,7 @@ public class ExcelProcessorRestController {
     this.uploadService = uploadService;
   }
 
-  @PutMapping
+  @PostMapping
   public ResponseEntity<String> upload(@RequestParam("tenantCode") String tenantCode,
                                        @RequestParam("appCode") String appCode,
                                        @RequestParam("excelType") String excelType,

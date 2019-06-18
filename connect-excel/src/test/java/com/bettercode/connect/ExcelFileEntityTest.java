@@ -1,6 +1,6 @@
 package com.bettercode.connect;
 
-import com.bettercode.connect.entity.ExcelFile;
+import com.bettercode.connect.entity.WorkExcelFile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,7 +20,7 @@ public class ExcelFileEntityTest {
   @Test
   public void createRowMapperNameTest() throws IOException {
     // given
-    ExcelFile excelFile = new ExcelFile("bettercode", "connect", "account", new MultipartFile() {
+    WorkExcelFile excelFile = new WorkExcelFile("bettercode", "connect", "account", new MultipartFile() {
       @Override
       public String getName() {
         return null;

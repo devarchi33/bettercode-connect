@@ -2,7 +2,7 @@ package com.bettercode.connect.rest;
 
 
 import com.bettercode.connect.Util.FileUtil;
-import com.bettercode.connect.entity.ExcelFile;
+import com.bettercode.connect.entity.WorkExcelFile;
 import com.bettercode.connect.exception.NotRegisteredException;
 import com.bettercode.connect.exception.NotSupportedFileException;
 import com.bettercode.connect.service.IUploadService;
@@ -48,7 +48,7 @@ public class ExcelProcessorRestController {
       throw new NotRegisteredException(tenantCode + ", " + appCode + ", " + excelType + " is not registered!");
     }
 
-    ExcelFile createdExcelFile = uploadService.saveUploadExcelFile(new ExcelFile(tenantCode, appCode, excelType, excelFile, userId));
+    WorkExcelFile createdExcelFile = uploadService.saveUploadExcelFile(new WorkExcelFile(tenantCode, appCode, excelType, excelFile, userId));
     return new ResponseEntity<>(createdExcelFile.getLinkUrl(env), HttpStatus.CREATED);
   }
 

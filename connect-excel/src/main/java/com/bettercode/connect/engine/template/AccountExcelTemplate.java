@@ -3,7 +3,7 @@ package com.bettercode.connect.engine.template;
 import com.bettercode.connect.engine.ExcelRowMapper;
 import com.bettercode.connect.engine.handler.AccountSheetContentHandlerBuilder;
 import com.bettercode.connect.engine.mapper.AccountRecord;
-import com.bettercode.connect.entity.ExcelFile;
+import com.bettercode.connect.entity.WorkExcelFile;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
@@ -29,7 +29,7 @@ import java.io.InputStream;
 public class AccountExcelTemplate {
     private final static Logger logger = LoggerFactory.getLogger(AccountExcelTemplate.class);
 
-    public AccountRecord getRows(ExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) throws IOException {
+    public AccountRecord getRows(WorkExcelFile uploadExcelFile, ExcelRowMapper excelRowMapper) throws IOException {
         AccountSheetContentHandlerBuilder sheetContentHandlerBuilder = new AccountSheetContentHandlerBuilder(new AccountRecord());
 
         try {

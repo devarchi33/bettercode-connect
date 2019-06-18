@@ -1,9 +1,9 @@
 package com.bettercode.connect.service;
 
-import com.bettercode.connect.entity.ExcelFile;
+import com.bettercode.connect.entity.WorkExcelFile;
 
 public interface IUploadService {
     boolean isRegisteredExcelType(String tenantCode, String appCode, String excelType);
-    ExcelFile saveUploadExcelFile(ExcelFile excelFile);
+    WorkExcelFile saveUploadExcelFile(WorkExcelFile excelFile);
     String findJsonFormatExcelFile(Long id);
 }

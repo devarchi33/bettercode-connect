@@ -2,7 +2,7 @@ package com.bettercode.connect.service.impl;
 
 import com.bettercode.connect.engine.ExcelRowMapper;
 import com.bettercode.connect.engine.template.AccountExcelTemplate;
-import com.bettercode.connect.entity.ExcelFile;
+import com.bettercode.connect.entity.WorkExcelFile;
 import com.bettercode.connect.entity.ExcelTypeId;
 import com.bettercode.connect.exception.NotRegisteredException;
 import com.bettercode.connect.exception.NotSupportedFileException;
@@ -51,20 +51,20 @@ public class UploadServiceImpl implements IUploadService {
   }
 
   @Override
-  public ExcelFile saveUploadExcelFile(ExcelFile excelFile) {
+  public WorkExcelFile saveUploadExcelFile(WorkExcelFile excelFile) {
     return excelFileRepository.save(excelFile);
   }
 
   @Override
   public String findJsonFormatExcelFile(Long id) {
-    Optional<ExcelFile> optional = excelFileRepository.findById(id);
+    Optional<WorkExcelFile> optional = excelFileRepository.findById(id);
     if(optional.isPresent()) {
       return parsingExcelFileToJson(optional.get());
     }
-    throw new NoResultException("ID: " + id + ", ExcelFile is not exists.");
+    throw new NoResultException("ID: " + id + ", WorkExcelFile is not exists.");
   }
 
-  private String parsingExcelFileToJson(ExcelFile uploadExcelFile) {
+  private String parsingExcelFileToJson(WorkExcelFile uploadExcelFile) {
     AccountExcelTemplate excelTemplate = new AccountExcelTemplate();
     try {
       return excelTemplate.getRows(uploadExcelFile, getExcelItemProcessor(uploadExcelFile)).toString();
@@ -73,7 +73,7 @@ public class UploadServiceImpl implements IUploadService {
     }
   }
 
-  private ExcelRowMapper getExcelItemProcessor(ExcelFile uploadExcelFile) {
+  private ExcelRowMapper getExcelItemProcessor(WorkExcelFile uploadExcelFile) {
     try {
       return (ExcelRowMapper) applicationContext.getBean(uploadExcelFile.getRowMapperName());
     } catch (BeansException e) {

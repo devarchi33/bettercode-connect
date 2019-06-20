@@ -1,4 +1,4 @@
-package com.bettercode.connect.dto;
+package com.bettercode.connect.service.dto;
 
 public class CreatingBankAccountRecord {
 

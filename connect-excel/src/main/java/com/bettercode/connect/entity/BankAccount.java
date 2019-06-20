@@ -2,9 +2,7 @@ package com.bettercode.connect.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Table
 @Entity(name = "bank_account")
@@ -24,9 +22,9 @@ public class BankAccount {
   private Committed committed;
 
   @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  private List<BankAccountQuaterRecord> bankAccountQuaterRecords = new ArrayList<>();
+  private Set<BankAccountQuaterRecord> bankAccountQuaterRecords = new HashSet<>();
 
-  public void addBankAccountRecord(BankAccountQuaterRecord bankAccountRecord) {
+  public void addBankAccountQuaterRecord(BankAccountQuaterRecord bankAccountRecord) {
     this.bankAccountQuaterRecords.add(bankAccountRecord);
 
     if(bankAccountRecord.getBankAccount() != this) {
@@ -34,11 +32,18 @@ public class BankAccount {
     }
   }
 
-  public List<BankAccountQuaterRecord> getBankAccountQuaterRecords() {
+  public Set<BankAccountQuaterRecord> getBankAccountQuaterRecords() {
     return bankAccountQuaterRecords;
   }
 
   public BankAccount() {
+  }
+
+  public BankAccount(String accountNo, String createdBy) {
+    this.accountNo = accountNo;
+    this.balance = new BigDecimal(0);
+    this.withdrawAmount = new BigDecimal(0);
+    this.committed = new Committed(new Date(), createdBy);
   }
 
   public BankAccount(String accountNo, BigDecimal balance, BigDecimal withdrawAmount, String createdBy) {

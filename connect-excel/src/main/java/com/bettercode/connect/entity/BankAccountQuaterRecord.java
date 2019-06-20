@@ -19,14 +19,6 @@ public class BankAccountQuaterRecord {
   private String quater;
 
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "withdrawAmount", column = @Column(name = "total_quater_withdraw_amount")),
-      @AttributeOverride(name = "depositAmount", column = @Column(name = "total_quater_deposit_amount")),
-      @AttributeOverride(name = "balance", column = @Column(name = "balance"))
-  })
-  private AccountAmount totalQuaterAccountAmount;
-
-  @Embedded
   private Committed committed;
 
   @ManyToOne
@@ -58,10 +50,9 @@ public class BankAccountQuaterRecord {
   public BankAccountQuaterRecord() {
   }
 
-  public BankAccountQuaterRecord(Integer year, String quater, AccountAmount totalQuaterAccountAmount, String createdBy) {
+  public BankAccountQuaterRecord(Integer year, String quater, String createdBy) {
     this.year = year;
     this.quater = quater;
-    this.totalQuaterAccountAmount = totalQuaterAccountAmount;
     this.committed = new Committed(new Date(), createdBy);
   }
 
@@ -73,11 +64,11 @@ public class BankAccountQuaterRecord {
     return quater;
   }
 
-  public AccountAmount getTotalQuaterAccountAmount() {
-    return totalQuaterAccountAmount;
-  }
-
   public Committed getCommitted() {
     return committed;
+  }
+
+  public boolean isAlreadyExists(BankAccountQuaterRecord bankAccountQuaterRecord) {
+    return this.year.equals(bankAccountQuaterRecord.getYear()) && this.quater.equals(bankAccountQuaterRecord.getQuater());
   }
 }

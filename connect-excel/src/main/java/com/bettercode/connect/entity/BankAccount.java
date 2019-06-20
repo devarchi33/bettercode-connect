@@ -17,8 +17,8 @@ public class BankAccount {
   @Column(name = "balance")
   private BigDecimal balance;
 
-  @Column(name = "withdrawable_amount")
-  private BigDecimal withdrawableAmount;
+  @Column(name = "withdraw_amount")
+  private BigDecimal withdrawAmount;
 
   @Embedded
   private Committed committed;
@@ -41,10 +41,10 @@ public class BankAccount {
   public BankAccount() {
   }
 
-  public BankAccount(String accountNo, BigDecimal balance, BigDecimal withdrawableAmount, String createdBy) {
+  public BankAccount(String accountNo, BigDecimal balance, BigDecimal withdrawAmount, String createdBy) {
     this.accountNo = accountNo;
     this.balance = balance;
-    this.withdrawableAmount = withdrawableAmount;
+    this.withdrawAmount = withdrawAmount;
     this.committed = new Committed(new Date(), createdBy);
   }
 
@@ -56,8 +56,8 @@ public class BankAccount {
     return balance;
   }
 
-  public BigDecimal getWithdrawableAmount() {
-    return withdrawableAmount;
+  public BigDecimal getWithdrawAmount() {
+    return withdrawAmount;
   }
 
   public Committed getCommitted() {

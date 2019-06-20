@@ -15,9 +15,9 @@ public class BankAccountRecord {
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "transaction_date")
+  @Column(name = "transaction_time")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date transactionDate;
+  private Date transactionTime;
 
   @Column(name = "briefs")
   private String briefs;
@@ -55,11 +55,11 @@ public class BankAccountRecord {
   public BankAccountRecord() {
   }
 
-  public BankAccountRecord(Long id, Date transactionDate, String briefs, String payee, BigDecimal withdrawAmount,
+  public BankAccountRecord(Long id, Date transactionTime, String briefs, String payee, BigDecimal withdrawAmount,
                            BigDecimal depositAmount, BigDecimal balance, String memo, String transactionPoint,
                            String createdBy) {
     this.id = id;
-    this.transactionDate = transactionDate;
+    this.transactionTime = transactionTime;
     this.briefs = briefs;
     this.payee = payee;
     this.accountAmount = new AccountAmount(withdrawAmount, depositAmount, balance);
@@ -72,8 +72,8 @@ public class BankAccountRecord {
     return id;
   }
 
-  public Date getTransactionDate() {
-    return transactionDate;
+  public Date getTransactionTime() {
+    return transactionTime;
   }
 
   public String getBriefs() {

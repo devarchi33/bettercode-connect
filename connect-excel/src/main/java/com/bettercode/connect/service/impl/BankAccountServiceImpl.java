@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.bettercode.connect.utils.NumberUtil.removeThousandUnit;
+
 @Service
 public class BankAccountServiceImpl implements IBankAccountService {
 
@@ -65,13 +67,5 @@ public class BankAccountServiceImpl implements IBankAccountService {
     }
 
     bankAccountRepository.save(bankAccount);
-  }
-
-  private String addThousandUnit(String data) {
-    return new java.text.DecimalFormat("#,###").format(Integer.parseInt(data));
-  }
-
-  private String removeThousandUnit(String data) {
-    return data.replaceAll("\\,","");
   }
 }

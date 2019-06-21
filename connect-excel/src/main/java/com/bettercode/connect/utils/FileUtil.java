@@ -1,4 +1,4 @@
-package com.bettercode.connect.Util;
+package com.bettercode.connect.utils;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;

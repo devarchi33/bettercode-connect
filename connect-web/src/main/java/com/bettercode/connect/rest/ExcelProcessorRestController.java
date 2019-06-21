@@ -1,7 +1,7 @@
 package com.bettercode.connect.rest;
 
 
-import com.bettercode.connect.Util.FileUtil;
+import com.bettercode.connect.utils.FileUtil;
 import com.bettercode.connect.entity.WorkExcelFile;
 import com.bettercode.connect.exception.NotRegisteredException;
 import com.bettercode.connect.exception.NotSupportedFileException;

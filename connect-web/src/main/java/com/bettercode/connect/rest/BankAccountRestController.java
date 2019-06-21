@@ -1,6 +1,8 @@
 package com.bettercode.connect.rest;
 
 
+import com.bettercode.connect.query.IBankAccountRecordQuery;
+import com.bettercode.connect.query.dto.CreatedBankAccount;
 import com.bettercode.connect.service.IBankAccountService;
 import com.bettercode.connect.service.dto.CreatingBankAccountRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,13 @@ public class BankAccountRestController {
     this.bankAccountService = bankAccountService;
   }
 
+  private IBankAccountRecordQuery bankAccountRecordQuery;
+
+  @Autowired
+  public void setBankAccountRecordQuery(IBankAccountRecordQuery bankAccountRecordQuery) {
+    this.bankAccountRecordQuery = bankAccountRecordQuery;
+  }
+
   @PutMapping
   public ResponseEntity<Void> upload(@RequestParam("tenantCode") String tenantCode,
                                      @RequestParam("accountNo") String accountNo,
@@ -43,5 +52,13 @@ public class BankAccountRestController {
     bankAccountService.createBankAccountRecord(accountNo, year, quater, creatingBankAccountRecords, createdBy);
 
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @GetMapping
+  public ResponseEntity<CreatedBankAccount> search(@RequestParam("tenantCode") String tenantCode,
+                                                   @RequestParam("accountNo") String accountNo,
+                                                   @RequestParam("year") Integer year,
+                                                   @RequestParam("quater") String quater) {
+    return new ResponseEntity<>(bankAccountRecordQuery.queryForBankAccount(accountNo, year, quater), HttpStatus.OK);
   }
 }

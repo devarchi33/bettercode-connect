@@ -12,6 +12,7 @@ import java.util.Date;
 public class BankAccountRecord {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
@@ -42,23 +43,22 @@ public class BankAccountRecord {
       @JoinColumnOrFormula(column = @JoinColumn(name = "year", referencedColumnName = "year")),
       @JoinColumnOrFormula(column = @JoinColumn(name = "quater", referencedColumnName = "quater")),
   })
-  private BankAccountQuaterRecord bankAccountQuaterRecord;
+  private QuaterBankAccountRecord bankAccountQuaterRecord;
 
-  public BankAccountQuaterRecord getBankAccountQuaterRecord() {
+  public QuaterBankAccountRecord getBankAccountQuaterRecord() {
     return bankAccountQuaterRecord;
   }
 
-  public void setBankAccountQuaterRecord(BankAccountQuaterRecord bankAccountQuaterRecord) {
+  public void setBankAccountQuaterRecord(QuaterBankAccountRecord bankAccountQuaterRecord) {
     this.bankAccountQuaterRecord = bankAccountQuaterRecord;
   }
 
   public BankAccountRecord() {
   }
 
-  public BankAccountRecord(Long id, Date transactionTime, String briefs, String payee, BigDecimal withdrawAmount,
+  public BankAccountRecord(Date transactionTime, String briefs, String payee, BigDecimal withdrawAmount,
                            BigDecimal depositAmount, BigDecimal balance, String memo, String transactionPoint,
                            String createdBy) {
-    this.id = id;
     this.transactionTime = transactionTime;
     this.briefs = briefs;
     this.payee = payee;

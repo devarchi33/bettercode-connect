@@ -22,9 +22,9 @@ public class BankAccount {
   private Committed committed;
 
   @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  private Set<BankAccountQuaterRecord> bankAccountQuaterRecords = new HashSet<>();
+  private Set<QuaterBankAccountRecord> bankAccountQuaterRecords = new HashSet<>();
 
-  public void addBankAccountQuaterRecord(BankAccountQuaterRecord bankAccountRecord) {
+  public void addQuaterBankAccountRecord(QuaterBankAccountRecord bankAccountRecord) {
     this.bankAccountQuaterRecords.add(bankAccountRecord);
 
     if(bankAccountRecord.getBankAccount() != this) {
@@ -32,7 +32,7 @@ public class BankAccount {
     }
   }
 
-  public Set<BankAccountQuaterRecord> getBankAccountQuaterRecords() {
+  public Set<QuaterBankAccountRecord> getBankAccountQuaterRecords() {
     return bankAccountQuaterRecords;
   }
 

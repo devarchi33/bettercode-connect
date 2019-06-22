@@ -1,7 +1,7 @@
 package com.bettercode.connect.query.impl;
 
 import com.bettercode.connect.entity.BankAccount;
-import com.bettercode.connect.entity.BankAccountQuaterRecord;
+import com.bettercode.connect.entity.QuaterBankAccountRecord;
 import com.bettercode.connect.query.IBankAccountRecordQuery;
 import com.bettercode.connect.query.dto.CreatedBankAccount;
 import com.bettercode.connect.query.dto.CreatedBankAccountQuaterRecord;
@@ -28,7 +28,7 @@ public class BankAccountRecordQueryJpaImpl implements IBankAccountRecordQuery {
     Optional<BankAccount> foundBankAccount = bankAccountRepository.findById(accountNo);
     if(foundBankAccount.isPresent()) {
       BankAccount bankAccount = foundBankAccount.get();
-      BankAccountQuaterRecord foundBankAccountQuaterRecord = bankAccount.getBankAccountQuaterRecords().stream()
+      QuaterBankAccountRecord foundBankAccountQuaterRecord = bankAccount.getBankAccountQuaterRecords().stream()
           .filter(bankAccountQuaterRecord -> bankAccountQuaterRecord.getYear().equals(year))
           .filter(bankAccountQuaterRecord -> bankAccountQuaterRecord.getQuater().equals(quater))
           .collect(Collectors.toList())

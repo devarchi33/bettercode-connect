@@ -8,7 +8,7 @@ import java.util.List;
 @Table
 @Entity(name = "bank_account_quater_record")
 @IdClass(BankAccountQuaterRecordId.class)
-public class BankAccountQuaterRecord {
+public class QuaterBankAccountRecord {
 
   @Id
   @Column(name = "year")
@@ -47,10 +47,10 @@ public class BankAccountQuaterRecord {
     return bankAccountRecords;
   }
 
-  public BankAccountQuaterRecord() {
+  public QuaterBankAccountRecord() {
   }
 
-  public BankAccountQuaterRecord(Integer year, String quater, String createdBy) {
+  public QuaterBankAccountRecord(Integer year, String quater, String createdBy) {
     this.year = year;
     this.quater = quater;
     this.committed = new Committed(new Date(), createdBy);
@@ -68,7 +68,7 @@ public class BankAccountQuaterRecord {
     return committed;
   }
 
-  public boolean isAlreadyExists(BankAccountQuaterRecord bankAccountQuaterRecord) {
+  public boolean isAlreadyExists(QuaterBankAccountRecord bankAccountQuaterRecord) {
     return this.year.equals(bankAccountQuaterRecord.getYear()) && this.quater.equals(bankAccountQuaterRecord.getQuater());
   }
 }

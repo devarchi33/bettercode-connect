@@ -37,4 +37,16 @@ public class DateUtil {
         }
     }
 
+    public static Long calculateDurationByDate(Date startAt, Date endAt) throws ParseException {
+        Date FirstDate = sdfYYYYMMDD.parse(sdfYYYYMMDD.format(startAt));
+        Date SecondDate = sdfYYYYMMDD.parse(sdfYYYYMMDD.format(endAt));
+
+        long calDate = FirstDate.getTime() - SecondDate.getTime();
+
+        long calDateDays = calDate / ( 24*60*60*1000);
+
+        return Math.abs(calDateDays);
+
+    }
+
 }

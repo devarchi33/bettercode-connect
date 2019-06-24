@@ -30,7 +30,7 @@ public class ConnectWebApplicationTests {
     this.env = env;
   }
 
-  @PersistenceUnit(unitName = "excel")
+  @PersistenceUnit(unitName = "connect")
   protected EntityManagerFactory emf;
 
 

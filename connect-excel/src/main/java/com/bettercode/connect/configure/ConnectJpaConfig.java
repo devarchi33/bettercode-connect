@@ -20,10 +20,10 @@ import java.util.HashMap;
 @Configuration
 @EnableJpaRepositories(
     basePackages = "com.bettercode.connect.repository",
-    entityManagerFactoryRef = "excelEntityManager",
-    transactionManagerRef = "excelTransactionManager"
+    entityManagerFactoryRef = "connectEntityManager",
+    transactionManagerRef = "connectTransactionManager"
 )
-public class ExcelJpaConfig {
+public class ConnectJpaConfig {
     private Environment env;
 
     @Autowired
@@ -31,31 +31,31 @@ public class ExcelJpaConfig {
         this.env = env;
     }
 
-    @Bean("excelDataSource")
-    @ConfigurationProperties(prefix = "excel.datasource")
-    public DataSource excelDataSource() {
+    @Bean("connectDataSource")
+    @ConfigurationProperties(prefix = "connect.datasource")
+    public DataSource connectDataSource() {
         return new DriverManagerDataSource();
     }
 
-    @Bean("excelEntityManager")
-    @ConfigurationProperties(prefix = "excel.datasource")
-    public LocalContainerEntityManagerFactoryBean excelEntityManager(
-        EntityManagerFactoryBuilder builder, @Qualifier("excelDataSource") DataSource dataSource) {
+    @Bean("connectEntityManager")
+    @ConfigurationProperties(prefix = "connect.datasource")
+    public LocalContainerEntityManagerFactoryBean connectEntityManager(
+        EntityManagerFactoryBuilder builder, @Qualifier("connectDataSource") DataSource dataSource) {
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.dialect", env.getProperty("excel.datasource.hibernate.dialect"));
-        properties.put("hibernate.hbm2ddl.auto", env.getProperty("excel.datasource.hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.dialect", env.getProperty("connect.datasource.hibernate.dialect"));
+        properties.put("hibernate.hbm2ddl.auto", env.getProperty("connect.datasource.hibernate.hbm2ddl.auto"));
 
         return builder
             .dataSource(dataSource)
             .packages("com.bettercode.connect.entity")
-            .persistenceUnit("excel")
+            .persistenceUnit("connect")
             .properties(properties)
             .build();
     }
 
-    @Bean("excelTransactionManager")
-    public PlatformTransactionManager excelTransactionManager(
-        @Qualifier("excelEntityManager") EntityManagerFactory entityManagerFactory) {
+    @Bean("connectTransactionManager")
+    public PlatformTransactionManager connectTransactionManager(
+        @Qualifier("connectEntityManager") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

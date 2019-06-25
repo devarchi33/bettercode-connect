@@ -1,5 +1,6 @@
 package com.bettercode.connect;
 
+import com.bettercode.connect.entity.ApprovalHoliday;
 import com.bettercode.connect.entity.BankAccount;
 import com.bettercode.connect.entity.ExcelType;
 import com.srxcloud.integration.test.jpa.TransactionJpaTemplate;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @RunWith(SpringRunner.class)
@@ -47,6 +49,11 @@ public class ConnectWebApplicationTests {
 
         BankAccount bettercodeAccount = new BankAccount("895437-00-000864", new BigDecimal(0), new BigDecimal(0), CREATED_BY);
         em.merge(bettercodeAccount);
+
+        final String applicant = "lee.donghoon";
+        final String approver = "ahn.younghoe";
+        ApprovalHoliday approvalHoliday1= new ApprovalHoliday(applicant, new Date(), new Date(), "test", approver, applicant);
+        em.merge(approvalHoliday1);
         return null;
       });
     }

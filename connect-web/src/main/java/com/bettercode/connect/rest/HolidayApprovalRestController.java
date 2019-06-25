@@ -1,15 +1,14 @@
 package com.bettercode.connect.rest;
 
 
+import com.bettercode.connect.query.IApprovalHolidayQuery;
+import com.bettercode.connect.query.dto.CreatedApprovalHoliday;
 import com.bettercode.connect.service.IApprovalHolidayService;
 import com.bettercode.connect.service.dto.CreatingApprovalHoliday;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -25,6 +24,13 @@ public class HolidayApprovalRestController {
     this.holidayApprovalService = holidayApprovalService;
   }
 
+  private IApprovalHolidayQuery approvalHolidayQuery;
+
+  @Autowired
+  public void setApprovalHolidayQuery(IApprovalHolidayQuery approvalHolidayQuery) {
+    this.approvalHolidayQuery = approvalHolidayQuery;
+  }
+
   @PutMapping
   public ResponseEntity<Long> createHolidayApproval(@Valid @RequestBody CreatingApprovalHoliday creatingHolidayApproval) throws ParseException {
 
@@ -32,5 +38,10 @@ public class HolidayApprovalRestController {
         holidayApprovalService.createHolidayApproval(creatingHolidayApproval),
         HttpStatus.CREATED
     );
+  }
+
+  @GetMapping
+  public ResponseEntity<CreatedApprovalHoliday> findApprovalHolidayById(@RequestParam Long id) {
+    return new ResponseEntity<>(approvalHolidayQuery.findApprovalHolidayById(id), HttpStatus.OK);
   }
 }

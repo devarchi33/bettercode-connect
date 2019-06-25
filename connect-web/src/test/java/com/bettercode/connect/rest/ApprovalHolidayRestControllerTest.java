@@ -3,6 +3,7 @@ package com.bettercode.connect.rest;
 
 import com.bettercode.connect.ConnectWebApplicationTests;
 import com.bettercode.connect.entity.ApprovalHoliday;
+import com.bettercode.connect.query.dto.CreatedApprovalHoliday;
 import com.bettercode.connect.repository.IApprovalHolidayRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,6 +30,7 @@ public class ApprovalHolidayRestControllerTest extends ConnectWebApplicationTest
   @Autowired
   private IApprovalHolidayRepository approvalHolidayRepository;
 
+  private final String BASE_URL = "/api/v1/approval-holiday";
 
   @Test
   public void creatingApprovalHoliday() {
@@ -43,7 +46,7 @@ public class ApprovalHolidayRestControllerTest extends ConnectWebApplicationTest
     // when
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    ResponseEntity<Long> responseEntity = restTemplate.exchange("/api/v1/approval-holiday", HttpMethod.PUT, new HttpEntity<>(requestBody, headers), Long.class);
+    ResponseEntity<Long> responseEntity = restTemplate.exchange(BASE_URL, HttpMethod.PUT, new HttpEntity<>(requestBody, headers), Long.class);
 
     // then
     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -55,6 +58,22 @@ public class ApprovalHolidayRestControllerTest extends ConnectWebApplicationTest
       assertThat(approvalHoliday.get().getReason()).isEqualTo("첫째아기 병원");
       assertThat(approvalHoliday.get().getApprove()).isEqualTo(false);
     }
+  }
 
+  @Test
+  public void findApprovalHolidayById() {
+    // given (before => approvalHoliday1(id = 1))
+
+    // when
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    ResponseEntity<CreatedApprovalHoliday> responseEntity = restTemplate.exchange(BASE_URL + "?id=1", HttpMethod.GET, new HttpEntity<>(headers), CreatedApprovalHoliday.class);
+
+    // then
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    assertThat(Objects.requireNonNull(responseEntity.getBody()).getId()).isEqualTo(1L);
+    assertThat(responseEntity.getBody().getApplicant()).isEqualTo("lee.donghoon");
+    assertThat(responseEntity.getBody().getApprover()).isEqualTo("ahn.younghoe");
   }
 }

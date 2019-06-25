@@ -83,6 +83,10 @@ public class ApprovalHoliday {
     return isApprove;
   }
 
+  public void setApprove(Boolean approve) {
+    isApprove = approve;
+  }
+
   public Committed getCommitted() {
     return committed;
   }

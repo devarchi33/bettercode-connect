@@ -33,7 +33,7 @@ public class ApprovalHolidayRestControllerTest extends ConnectWebApplicationTest
   private final String BASE_URL = "/api/v1/approval-holiday";
 
   @Test
-  public void creatingApprovalHoliday() {
+  public void creatingApprovalHolidayTest() {
     // given
     final String requestBody = "{\n" +
         "  \"applicant\": \"li.dongxun\",\n" +
@@ -61,7 +61,7 @@ public class ApprovalHolidayRestControllerTest extends ConnectWebApplicationTest
   }
 
   @Test
-  public void findApprovalHolidayById() {
+  public void findApprovalHolidayByIdTest() {
     // given (before => approvalHoliday1(id = 1))
 
     // when
@@ -75,5 +75,25 @@ public class ApprovalHolidayRestControllerTest extends ConnectWebApplicationTest
     assertThat(Objects.requireNonNull(responseEntity.getBody()).getId()).isEqualTo(1L);
     assertThat(responseEntity.getBody().getApplicant()).isEqualTo("lee.donghoon");
     assertThat(responseEntity.getBody().getApprover()).isEqualTo("ahn.younghoe");
+  }
+
+  @Test
+  public void modifyingHolidayTest() {
+    // given (before => approvalHoliday1(id = 1))
+
+    // when
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    ResponseEntity<Long> responseEntity = restTemplate.exchange(BASE_URL + "?modifyBy=ahn.younghoe&id=1&isApprove=true", HttpMethod.POST, new HttpEntity<>(headers), Long.class);
+
+    // then
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    Optional<ApprovalHoliday> approvalHoliday = approvalHolidayRepository.findById(responseEntity.getBody());
+    if(approvalHoliday.isPresent()) {
+      assertThat(approvalHoliday.get().getApplicant()).isEqualTo("lee.donghoon");
+      assertThat(approvalHoliday.get().getApprover()).isEqualTo("ahn.younghoe");
+      assertThat(approvalHoliday.get().getApprove()).isEqualTo(true);
+    }
   }
 }

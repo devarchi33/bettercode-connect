@@ -17,11 +17,11 @@ import java.text.ParseException;
 @RequestMapping("/api/v1/approval-holiday")
 public class HolidayApprovalRestController {
 
-  private IApprovalHolidayService holidayApprovalService;
+  private IApprovalHolidayService approvalHolidayService;
 
   @Autowired
-  public void setHolidayApprovalService(IApprovalHolidayService holidayApprovalService) {
-    this.holidayApprovalService = holidayApprovalService;
+  public void setApprovalHolidayService(IApprovalHolidayService approvalHolidayService) {
+    this.approvalHolidayService = approvalHolidayService;
   }
 
   private IApprovalHolidayQuery approvalHolidayQuery;
@@ -35,13 +35,26 @@ public class HolidayApprovalRestController {
   public ResponseEntity<Long> createHolidayApproval(@Valid @RequestBody CreatingApprovalHoliday creatingHolidayApproval) throws ParseException {
 
     return new ResponseEntity<>(
-        holidayApprovalService.createHolidayApproval(creatingHolidayApproval),
+        approvalHolidayService.createApprovalHoliday(creatingHolidayApproval),
         HttpStatus.CREATED
     );
   }
 
   @GetMapping
   public ResponseEntity<CreatedApprovalHoliday> findApprovalHolidayById(@RequestParam Long id) {
-    return new ResponseEntity<>(approvalHolidayQuery.findApprovalHolidayById(id), HttpStatus.OK);
+    return new ResponseEntity<>(
+        approvalHolidayQuery.findApprovalHolidayById(id),
+        HttpStatus.OK
+    );
+  }
+
+  @PostMapping
+  public ResponseEntity<Long> modifyingApprovalHoliday(@RequestParam Long id,
+                                                       @RequestParam Boolean isApprove,
+                                                       @RequestParam String modifyBy) {
+    return new ResponseEntity<>(
+        approvalHolidayService.approveHoliday(id, isApprove, modifyBy),
+        HttpStatus.OK
+    );
   }
 }

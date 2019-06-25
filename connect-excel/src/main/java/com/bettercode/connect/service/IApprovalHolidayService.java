@@ -6,5 +6,7 @@ import java.text.ParseException;
 
 public interface IApprovalHolidayService {
 
-  Long createHolidayApproval(CreatingApprovalHoliday creatingHolidayApproval) throws ParseException;
+  Long createApprovalHoliday(CreatingApprovalHoliday creatingHolidayApproval) throws ParseException;
+
+  Long approveHoliday(Long id, Boolean isApprove, String modifyBy);
 }

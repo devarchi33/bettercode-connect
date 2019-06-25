@@ -21,3 +21,6 @@ GET {{apiAddress}}/approval-holiday?id=1
 Accept: application/json
 
 ###
+POST {{apiAddress}}/approval-holiday?id=1&isApprove=true&modifyBy=ahn.younghoe
+
+###
